@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+
+<HEAD>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <TITLE>Pomoc - P1_GUI_Matuszewski</TITLE>
+</HEAD>
+
+<BODY>
+
+   <CENTER><IMG SRC="weii.png"></CENTER>
+   <TABLE WIDTH="100%">
+      <TR>
+         <TD ALIGN="left">
+            <FONT COLOR="#222f3e">Copyright &copy 2021 by
+               Jędrzej Matuszewski (e-mail: <a href="mailto:jedrzej@matuszewski.net"></a>jedrzej@matuszewski.net)</FONT>
+         </TD>
+         <TD ALIGN="right" WIDTH="90">
+            <FONT COLOR="#222f3e">WEII PK</FONT>
+         </TD>
+      </TR>
+   </TABLE>
+   <HR ALIGN="left" WIDTH="100%" />
+   <CENTER>
+      <A HREF="#Etykieta1">Wprowadzenie</A> |
+      <A HREF="#Etykieta2">Specyfikacja</A> |
+      <A HREF="#Etykieta4">Charakterystyka programu</A> |
+      <A HREF="#Etykieta5">Funkcje programu</A>
+   </CENTER>
+   <BR>
+   <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+      <TR>
+         <TD>
+            <FONT FACE="Arial Narrow" COLOR="#2d3436" SIZE="+1">
+               <SPAN><STRONG>
+                     <A NAME="Etykieta1">Wprowadzenie</A>
+                  </STRONG></SPAN>
+            </FONT>
+         </TD>
+      </TR>
+      <TR>
+         Przedstawiony program stanowi rozwiązanie zadania 1. z przedmiotu Projektowanie Aplikcji.
+
+         <hr />
+      </TR>
+   </TABLE>
+   <BR>
+
+   <BR><BR>
+   <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+      <TR>
+         <TD>
+            <FONT FACE="Arial Narrow" COLOR="#2d3436" SIZE="+1">
+               <SPAN><STRONG>
+                     <A NAME="Etykieta2">Specyfikacja</A>
+                  </STRONG></SPAN>
+            </FONT>
+         </TD>
+      </TR>
+      <tr>
+         Aplikacja została wykonana w języku Java. Wykorzystuję środowisko JavaSE-1.8.
+         <br />Graficzny interfejs użytkownika został zbudowany w oparciu o bibliotekę Swing.
+         <hr />
+      </TR>
+   </TABLE>
+   <BR>
+
+   <BR><BR>
+   <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+      <TR>
+         <TD>
+            <FONT FACE="Arial Narrow" COLOR="#2d3436" SIZE="+1">
+               <SPAN><STRONG>
+                     <A NAME="Etykieta3">Charakterystyka programu</A>
+                  </STRONG></SPAN>
+            </FONT>
+         </TD>
+      </TR>
+      <TR>
+         Aplikacja składa się z następujących komponentów (klas):
+         <ul>
+            <li>
+               App - klasa uruchomieniowa.
+            </li>
+            <li>
+               MainFrame - dziedziczy po JFrame; główne okno aplikacji.
+            </li>
+            <li>
+               JMenu - menu główne aplikacji.
+            </li>
+            <li>
+               ToolBar - dziedziczy po JToolbar; pasek narzędziowy.
+            </li>
+            <li>
+               RightPanel - dziedziczy po JPanel; prawa część aplikacji, znajdują się tutaj przyciski sterujące.
+            </li>
+            <li>
+               LeftPanel - dziedziczy po JPanel; prawa część aplikacji, znajdują się tutaj:
+               <ul>
+                  <li>JTextField - pole wprowadzania liczby do tabeli.</li>
+                  <li>JSpiner - dwa pola służące do wyboru wiersza/kolumny.</li>
+                  <li>DataTable - dziedziczy po JPanel, zawiera komponent JTable; </li>
+                  <li>JList - lista, wybór operacji</li>
+                  <li>TextPanel - dziedziczy po JPanel, zawiera komponent JTextArea; jest to główne pole tekstowe wyświetlające rezultat wykonanej operacji</li>
+
+               </ul>
+            </li>
+            <li>BottomPanel - dziedziczy po JPanel; dolna część aplikacji, znajdują się tutaj:
+               <ul>
+                  <li>JTextField (info) - pole tekstowe, wyświetla nazwę wykonywanej operacji</li>
+                  <li>JTextField (status) - pole tekstowe, wyświetla status (OK\ERROR) wykonywanej operacji</li>
+               </ul>
+            </li>
+            <li>JButton - liczne przyciski występujące w aplikacji</li>
+            <li>JLabel - opisy tekstowe pól występujących w programie</li>
+         </ul>
+         <hr />
+      </TR>
+   </TABLE>
+   <BR>
+
+   <BR><BR>
+   <TABLE WIDTH="100%" CELLSPACING="0" CELLPADING="0">
+      <TR>
+         <TD>
+            <FONT FACE="Arial Narrow" COLOR="#2d3436" SIZE="+1">
+               <SPAN><STRONG>
+                     <A NAME="Etykieta5">Funkcje programu</A>
+                  </STRONG></SPAN>
+            </FONT>
+         </TD>
+      </TR>
+      <TR>
+         Program obsługuję następujące polecenia:
+         <ul>
+            <li>Suma liczb w tabeli</li>
+            <li>Wartość średnia liczb w tabeli</li>
+            <li>Wyświetlenie wartości minimalnej/maksymalnej spośród liczb w tabeli</li>
+            <li>Zerowanie tabeli</li>
+            <li>Wprowadzanie losowych liczb do tabeli</li>
+            <li>Eksport danych do pliku</li>
+            <li>Import danych z pliku</li>
+         </ul>
+         <hr />
+      </TR>
+   </TABLE>
+   <BR>
+
+   <BR><BR>
+   <HR ALIGN="left" WIDTH="100%" />
+   <CENTER>
+      <A HREF="#Etykieta1">Wprowadzenie</A> |
+      <A HREF="#Etykieta2">Specyfikacja</A> |
+      <A HREF="#Etykieta4">Charakterystyka programu</A> |
+      <A HREF="#Etykieta5">Funkcje programu</A>
+   </CENTER>
+</BODY>
+
+</HTML>
