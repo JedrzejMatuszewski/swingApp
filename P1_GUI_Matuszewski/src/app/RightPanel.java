@@ -3,8 +3,23 @@ package app;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.ContainerEvent;
+import java.awt.event.ContainerListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
+import org.freixas.jcalendar.DateEvent;
+import org.freixas.jcalendar.DateListener;
+import org.freixas.jcalendar.JCalendarCombo;
 
 public class RightPanel extends JPanel {
 
@@ -13,7 +28,14 @@ public class RightPanel extends JPanel {
 	JButton putRandomNumbersButton;
 	JButton saveToFileButton;
 	ICommandListener listener;
+	
+	JLabel operationLabel;
+	JList<OperationListItem> operationList;
+	JButton calculateButton;
 
+	JLabel calendarLabel;
+	JCalendarCombo calendarCombo;
+	
 	public RightPanel() {
 		putNumberButton = new JButton("Dodaj");
 		clearTableButton = new JButton("Wyzeruj");
@@ -26,7 +48,35 @@ public class RightPanel extends JPanel {
 		putRandomNumbersButton.setPreferredSize(buttonSize);
 		saveToFileButton.setPreferredSize(buttonSize);
 		
-		CreateWiewOfComponent();
+		operationLabel = new JLabel("Wybierz:  ");
+		calculateButton = new JButton("Oblicz");
+		operationLabel.setPreferredSize(buttonSize);
+		calculateButton.setPreferredSize(buttonSize);
+		
+		operationList = new JList();
+		
+		OperationListItem[] listData = {
+				new OperationListItem(Command.SUM, "Suma"),
+				new OperationListItem(Command.AVG, "Średnia"),
+				new OperationListItem(Command.MIN, "Min"),
+				new OperationListItem(Command.MAX, "Max")
+				};
+		
+		CustomListModel operationListModel = new CustomListModel(listData);
+
+		operationList.setModel(operationListModel);
+		operationList.setBorder(BorderFactory.createEtchedBorder());
+		operationList.setSelectedIndex(0);
+		operationList.setPreferredSize(new Dimension(100,75));
+		
+		
+		calendarCombo = new JCalendarCombo();
+		calendarCombo.setPreferredSize(buttonSize);
+		calendarCombo.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+		calendarLabel = new JLabel("Wybierz datę: ");
+		
+		
+		createWiewOfComponent();
 		
 		putRandomNumbersButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -69,6 +119,41 @@ public class RightPanel extends JPanel {
 			}
 		});
 
+		calculateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Command command = operationList.getSelectedValue().command;
+				if(listener != null)
+				{
+					listener.eventOccured(command);
+				}
+			}
+		});
+		
+
+		/*
+		calendarCombo.addDateListener(new DateListener() {
+			
+			public void dateChanged(DateEvent arg0) {
+				if((listener != null))
+				{
+					listener.eventOccured(Command.PRINT_DATE);
+					System.out.println("listener \n");
+				}
+			}
+		});
+		*/
+		
+		calendarCombo.addFocusListener(new FocusListener() {
+			public void focusLost(FocusEvent e) {}
+
+			public void focusGained(FocusEvent e) {
+				if((listener != null))
+				{
+					listener.eventOccured(Command.PRINT_DATE);
+				}
+			}
+		});
+
 		
 	}
 	
@@ -78,7 +163,7 @@ public class RightPanel extends JPanel {
 	}
 	
 
-	private void CreateWiewOfComponent() {
+	private void createWiewOfComponent() {
 		setLayout(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(1,5,5,12));
 		
@@ -93,18 +178,37 @@ public class RightPanel extends JPanel {
 		gc.anchor = GridBagConstraints.LINE_START;
 
 		
-		add(putNumberButton, gc);
+		//add(putNumberButton, gc);
 		
-		gc.gridy++;
+		//gc.gridy++;
 		add(clearTableButton, gc);
 		gc.gridy++;
 		add(putRandomNumbersButton, gc);
 		gc.gridy++;
 		add(saveToFileButton, gc);
 		
-
+		//gc.gridy++;
+		//gc.weighty = 0.1;
+		//add(new JSeparator(), gc);
+		
+		gc.weighty = 0.1;
 		gc.gridy++;
-		gc.weighty = 2;
-		add(new JSeparator(), gc);
+		add(operationLabel , gc);
+		gc.gridy++;
+		add(operationList , gc);
+		gc.gridy++;
+		add(calculateButton , gc);
+		
+		//gc.gridy++;
+		//gc.weighty = 0.1;
+		//add(new JSeparator(), gc);
+		
+		gc.gridy++;
+		add(calendarLabel , gc);
+		gc.gridy++;
+		add(calendarCombo , gc);
+		
+
+		
 	}
 }

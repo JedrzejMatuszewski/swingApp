@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.*;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,10 +9,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.file.*;
+import java.text.DateFormat;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+
+import com.l2fprod.common.swing.JTipOfTheDay;
+import com.l2fprod.common.swing.tips.DefaultTip;
+import com.l2fprod.common.swing.tips.DefaultTipModel;
 
 public class MainFrame extends JFrame {
 
@@ -24,13 +34,17 @@ public class MainFrame extends JFrame {
 
 	private HelpWindow helpWindow;
 	private AboutWindow aboutWindow;
+	
+	private JOptionPane optionPane;
+	
+	private Tips tips;
 
 	public MainFrame() {
 		// General settings
 		super("P1_GUI Matuszewski");
 		setLayout(new BorderLayout());
 		setMinimumSize(new Dimension(600, 520));
-		setSize(600, 520);
+		setSize(695, 571);
 		setVisible(true);
 		arrangeWindow();
 
@@ -52,7 +66,12 @@ public class MainFrame extends JFrame {
 
 		aboutWindow = new AboutWindow();
 		aboutWindow.setVisible(false);
-
+		
+		optionPane = new JOptionPane();
+		
+		tips = new Tips();
+		tips.setVisible(true);
+		
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Pliki tekstowe .TXT", "txt", "text");
 		fileChooser.setFileFilter(filter);
 
@@ -240,11 +259,14 @@ public class MainFrame extends JFrame {
 		bottomPanel.setInfo(c);
 		try {
 			operationPerformer(c);
+			updateChart();
 			bottomPanel.setStatus(true);
 		} catch (Exception ex) {
 			bottomPanel.setStatus(false);
 			bottomPanel.sendMessage("Wystąpił błąd! ");
 			bottomPanel.sendMessage(ex.getMessage());
+			
+			JOptionPane.showMessageDialog(this, ex.getMessage(), "Wystąpił błąd", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -252,36 +274,40 @@ public class MainFrame extends JFrame {
 		float num;
 		String message = "";
 		if (c == Command.SUM) {
-			num = this.leftPanel.dataTable.sum();
+			num = this.leftPanel.buttonBarPanel.dataTable.tableModel.sum();
 			message = "Suma: " + Float.toString(num);
 			
 		} else if (c == Command.AVG) {
-			num = this.leftPanel.dataTable.avg();
+			num = this.leftPanel.buttonBarPanel.dataTable.tableModel.avg();
 			message = "Średnia: " + num;
 			
 		} else if (c == Command.MIN) {
-			num = this.leftPanel.dataTable.min();
+			num = this.leftPanel.buttonBarPanel.dataTable.tableModel.min();
 			message = "Minimum: " + num;
 			
 		} else if (c == Command.MAX) {
-			num = this.leftPanel.dataTable.max();
+			num = this.leftPanel.buttonBarPanel.dataTable.tableModel.max();
 			message = "Maximum: " + num;
 			
 		} else if (c == Command.ADD_VALUE) {
 			int row = this.leftPanel.getRowNum() - 1;
 			int col = this.leftPanel.getColNum() - 1;
 			num = this.leftPanel.getTypedNum();
-			this.leftPanel.dataTable.setValueAt(num, row, col);
+			this.leftPanel.buttonBarPanel.dataTable.tableModel.setValueAt(Float.toString(num), row, col);
 			message = "Wprowadzono liczbę do tablicy";
-			
 		} else if (c == Command.CLEAR) {
-			this.leftPanel.dataTable.resetData();
+			this.leftPanel.buttonBarPanel.dataTable.tableModel.resetData();
 			message = "Tablica została zresetowana";
 			
 		} else if (c == Command.FILL_RANDOM) {
-			this.leftPanel.dataTable.generateRandomValues();
+			this.leftPanel.buttonBarPanel.dataTable.tableModel.generateRandomValues();
+			
 			message = "Losowe liczby zostały umieszczone";
 			
+		}else if(c == Command.PRINT_DATE) {
+			Date date = this.rightPanel.calendarCombo.getDate();
+			String dt =new SimpleDateFormat("dd-MM-yyyy").format(date);
+			message = "Wybrano date: " + dt;
 		} else if (c == Command.SAVE_TO_FILE) {
 			saveDataToFile();
 			message = "Dane zostały zapisane do pliku";
@@ -310,7 +336,7 @@ public class MainFrame extends JFrame {
 
 		for (int w = 0; w < 5; w++) {
 			for (int k = 0; k < 5; k++) {
-				String num = leftPanel.dataTable.getValueForm(w, k);
+				String num = leftPanel.buttonBarPanel.dataTable.tableModel.getValueAt(w, k).toString();
 				dataToSave += num + " ";
 			}
 		}
@@ -354,7 +380,7 @@ public class MainFrame extends JFrame {
 					} else {
 						valueToSave = numbersAsString[count];
 					}
-					leftPanel.dataTable.setValueAt(valueToSave, w, k);
+					leftPanel.buttonBarPanel.dataTable.tableModel.setValueAt(valueToSave, w, k);
 					count++;
 				}
 			}
@@ -363,6 +389,12 @@ public class MainFrame extends JFrame {
 			throw new Exception("Nie wybrano pliku! \n");
 		}
 
+	}
+	
+	private void updateChart() throws Exception
+	{
+		float[] data = this.leftPanel.buttonBarPanel.dataTable.tableModel.getFloatArray();
+		this.leftPanel.buttonBarPanel.chart.setData(data);
 	}
 
 	private void arrangeWindow() {

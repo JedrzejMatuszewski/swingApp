@@ -19,7 +19,7 @@ public class BottomPanel extends JPanel{
 	
 	public BottomPanel() {
 		textPanel = new TextPanel();
-		textPanel.setPreferredSize(new Dimension(573,150));
+		textPanel.setPreferredSize(new Dimension(668,150));
 		TitledBorder innerBorder = BorderFactory.createTitledBorder("Uzyskany rezultat");
 		innerBorder.setTitleJustification(TitledBorder.CENTER);
 		
@@ -91,6 +91,10 @@ public class BottomPanel extends JPanel{
 		else if(c == Command.IMPORT_FROM_FILE)
 		{
 			result = "Import danych z pliku";
+		}
+		else if(c ==Command.PRINT_DATE)
+		{
+			result = "Wybór daty";
 		}
 		infoText.setText(result);
 	}
@@ -187,7 +191,7 @@ public class BottomPanel extends JPanel{
 
 		second.setBackground(new Color(214,214,214));
 		//second.setBorder(BorderFactory.createEmptyBorder(5,0,5,0));
-		Dimension dim = new Dimension(584,30);
+		Dimension dim = new Dimension(678,30);
 		second.setPreferredSize(dim);
 		
 		add(second, gc);

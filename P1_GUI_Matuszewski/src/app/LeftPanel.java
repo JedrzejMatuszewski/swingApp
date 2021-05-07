@@ -1,13 +1,32 @@
 package app;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
+
+import org.freixas.jcalendar.JCalendarCombo;
+
+import com.l2fprod.common.swing.JButtonBar;
+import com.l2fprod.common.swing.plaf.ButtonBarUI;
+import com.l2fprod.common.swing.plaf.blue.BlueishButtonBarUI;
+
 
 public class LeftPanel extends JPanel {
 
@@ -17,12 +36,14 @@ public class LeftPanel extends JPanel {
 	JTextField inNumber;
 	JSpinner rowNum;
 	JSpinner colNum;
+	
+	JButton putNumberButton;
 
-	DataTable dataTable;
-
-	JLabel operationLabel;
-	JList<OperationListItem> operationList;
-	JButton calculateButton;
+	JTabbedPane tabs;
+	JButtonBar toolbar;
+	
+	
+	ButtonBarPanel buttonBarPanel;
 	TextPanel textPanel;
 	
 	private ICommandListener listener;	
@@ -32,29 +53,36 @@ public class LeftPanel extends JPanel {
 		inNumLabel = new JLabel("Podaj liczbę: ");
 		inRowLabel = new JLabel("Nr. wiersza: ");
 		inColLabel = new JLabel("Nr. kolumny: ");
-		operationLabel = new JLabel("Wybierz operację:  ");
-
+		
 		inNumber = new JTextField();
+		inNumber.setText("0");
 		rowNum = new JSpinner();
 		colNum = new JSpinner();
-		dataTable = new DataTable();
 		
-		inNumber.setText("0");
-		inNumber.setHorizontalAlignment(JTextField.RIGHT);
-		calculateButton = new JButton("Oblicz");
+		tabs = new JTabbedPane();
+
+
+		toolbar = new JButtonBar(JButtonBar.VERTICAL);
+	    toolbar.setUI(new BlueishButtonBarUI());
+	    buttonBarPanel = new ButtonBarPanel(toolbar);
 		
-		operationList = new JList<OperationListItem>();
-		DefaultListModel<OperationListItem> operationListModel = new DefaultListModel<OperationListItem>();
-		operationListModel.addElement(new OperationListItem(Command.SUM, "Suma"));
-		operationListModel.addElement(new OperationListItem(Command.AVG, "Średnia"));
-		operationListModel.addElement(new OperationListItem(Command.MIN, "Min"));
-		operationListModel.addElement(new OperationListItem(Command.MAX, "Max"));
-		operationList.setModel(operationListModel);
-		operationList.setBorder(BorderFactory.createEtchedBorder());
-		operationList.setSelectedIndex(0);
+	    inNumber.setHorizontalAlignment(JTextField.RIGHT);
+		
+	    putNumberButton = new JButton("Dodaj");
+		Dimension buttonSize = new Dimension(70,25);
+		putNumberButton.setPreferredSize(buttonSize);
+		
+		putNumberButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(listener != null)
+				{
+					listener.eventOccured(Command.ADD_VALUE);
+				}
+			}
+		});
 		
 
-		Dimension dim = new Dimension(50, 20);
+		Dimension dim = new Dimension(40, 25);
 
 		inNumber.setPreferredSize(dim);
 		rowNum.setPreferredSize(dim);
@@ -62,19 +90,10 @@ public class LeftPanel extends JPanel {
 		rowNum.setValue(1);
 		colNum.setValue(1);
 		
-
 		SetUpLayout();
 		
 		
-		calculateButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Command command = operationList.getSelectedValue().command;
-				if(listener != null)
-				{
-					listener.eventOccured(command);
-				}
-			}
-		});
+		
 	}
 	
 	public int getRowNum()
@@ -108,7 +127,7 @@ public class LeftPanel extends JPanel {
 		setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		Dimension dim = getPreferredSize();
-		dim.width = 480;
+		dim.width = 580;
 		setPreferredSize(dim);
 		setSize(dim);
 
@@ -154,8 +173,14 @@ public class LeftPanel extends JPanel {
 		/* Col input */
 		gc.gridx = 5;
 		gc.anchor = GridBagConstraints.LINE_START;
-		gc.insets = new Insets(0, 0, 0, 5);
+		gc.insets = new Insets(0, 0, 0, 0);
 		add(colNum, gc);
+		
+		/* put number button */
+		gc.gridx = 6;
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.insets = new Insets(0, 0, 0, 0);
+		add(putNumberButton, gc);
 
 		/* SECOND ROW------------------------------------------ */		
 		/* JTable */
@@ -163,41 +188,45 @@ public class LeftPanel extends JPanel {
 		gc.weighty = 1;
 		gc.gridy = 1;
 		gc.gridx = 0;
-		gc.gridwidth = 6;
+		gc.gridwidth = 7;
 		gc.anchor = GridBagConstraints.FIRST_LINE_START;
 		gc.insets = new Insets(12, 4, 0, 6);
 		
-		add(dataTable, gc);
+		//add(tabs, gc);
+		add(buttonBarPanel,gc);
 
-		/* THIRD ROW ------------------------------------------ */
+		/* Third------------------------------------------ /		
+		/* JTable /
 		gc.weightx = 1;
 		gc.weighty = 0.1;
 		gc.gridy = 2;
-		gc.gridx = 0;
+		
+		//gc.insets = new Insets(3,10,0,0);
+		gc.insets = new Insets(0,0,0,5);
+
+		gc.anchor = GridBagConstraints.LINE_END;
+		gc.gridx = 1;
+		gc.gridwidth = 1;
+		gc.weightx = 1;
+		
+		add(calendarLabel, gc);
+		
+		
+		gc.anchor = GridBagConstraints.LINE_START;
+		gc.gridx = 2;
 		gc.gridwidth = 1;
 
 		
-		/* Col Operation Label */
-		gc.gridx = 0;
-		gc.anchor = GridBagConstraints.LINE_END;
-		gc.insets = new Insets(0, 0, 0, 5);
-
-		add(operationLabel, gc);
+		add(calendarCombo,gc);
 		
-		/* Col Operation List */
-		gc.gridx = 1;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.insets = new Insets(0, 0, 0, 0);
-
-		add(operationList, gc);
+		*/
 		
-		/* Col Calculate Button */
-		gc.gridx = 2;
-		gc.anchor = GridBagConstraints.LINE_START;
-		gc.insets = new Insets(5, 0, 0, 0);
 
-		add(calculateButton, gc);
+
 		
 		
 	}
 }
+
+
+
