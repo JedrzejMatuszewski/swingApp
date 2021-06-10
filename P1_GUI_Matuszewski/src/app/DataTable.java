@@ -12,8 +12,20 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 
+/**
+ * Komponent - tabela
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class DataTable extends JPanel {
+	/**
+	 * Obiekt klasy JTable
+	 */
 	JTable table;
+	
+	/**
+	 * Model danych
+	 */
 	CustomTableModel tableModel;
 
 	public DataTable() {

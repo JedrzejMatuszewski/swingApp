@@ -11,7 +11,13 @@ import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+/**
+ * Okno pomocy
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class HelpWindow extends JDialog {
+	
 	private JEditorPane editorPane;
 	private String dataLocation;
 
@@ -52,6 +58,9 @@ public class HelpWindow extends JDialog {
 
 	}
 
+	/**
+	 * Metoda rozmieszczajaca okno
+	 */
 	private void arrangeWindow() {
 		// pobranie rozmiarow aplikacji
 		Dimension dialogSize = getSize();

@@ -5,9 +5,17 @@ import java.awt.Color;
 
 import javax.swing.*;
 
+/**
+ * Pole tekstowe umieszczone w BottomPanelu
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class TextPanel extends JPanel {
 	private JTextArea textArea;
 	
+	/**
+	 * Konstruktor
+	 */
 	public TextPanel()
 	{
 		textArea = new JTextArea();
@@ -21,6 +29,10 @@ public class TextPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Metoda wprowadzajaca tekst do pola tekstowego
+	 * @param text - tekst do wprowadzenia
+	 */
 	public void appendText(String text)
 	{
 		textArea.append(text);

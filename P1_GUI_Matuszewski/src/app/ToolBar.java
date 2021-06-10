@@ -4,22 +4,61 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+/**
+ * Pasek narzedziowy aplikacji
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class ToolBar extends JToolBar {
 
+	/**
+	 * Przycisk importu danych z pliku
+	 */
 	private JButton openFileButton;
+	/**
+	 * Przycisk zapisu danych do pliku
+	 */
 	private JButton saveFileButton;
+	/**
+	 * Przycisk zamykajacy aplikacje
+	 */
 	private JButton closeAppButton;
 	
+	
+	/**
+	 * Przycisk zerujacy dane w tabeli
+	 */
 	private JButton clearDataButton;
+	/**
+	 * Przycisk wprowadzajacy losowe dane do tabeli
+	 */
 	private JButton randomDataButton;
 	
+	/**
+	 * Przycisk obliczajacy sume danych z tabeli
+	 */
 	private JButton mathSumButton;
+	/**
+	 * Przycisk obliczajacy srednia danych z tabeli
+	 */
 	private JButton mathAvgButton;
+	/**
+	 * Przycisk obliczajacy wartosc minimalna danych z tabeli
+	 */
 	private JButton mathMinButton;
+	/**
+	 * Przycisk obliczajacy wartosc maksymalna danych z tabeli
+	 */
 	private JButton mathMaxButton;
 	
+	/**
+	 * Interfejs przekazujacy rodzaj wykonywanej operacji
+	 */
 	private ICommandListener listener;
 
+	/**
+	 * Konstruktor
+	 */
 	public ToolBar() {
 		setBorder(BorderFactory.createEtchedBorder());
 		setFloatable(false);
@@ -146,12 +185,21 @@ public class ToolBar extends JToolBar {
 
 
 	}
+	/**
+	 * Ustawianie interfejsu ICommandListener
+	 * @param listener
+	 */
 	public void setListener(ICommandListener listener)
 	{
 		this.listener = listener;
 	}
 	
 
+	/**
+	 * Metoda tworzaca ikone
+	 * @param file - nazwa ikony w katalogu icons
+	 * @return icon - ikona
+	 */
 	public Icon createIcon(String file) {
 		String path = System.getProperty("user.dir");
 		path = path + "\\icons\\" + file;

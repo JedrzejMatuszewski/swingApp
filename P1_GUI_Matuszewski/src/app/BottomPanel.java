@@ -9,6 +9,10 @@ import java.awt.Insets;
 import javax.swing.*;
 import javax.swing.border.*;
 
+/**
+ * Dolny panel aplikacji
+ * @author Jędrzej Matuszewski
+ */
 public class BottomPanel extends JPanel{
 	
 	private TextPanel textPanel;
@@ -17,6 +21,9 @@ public class BottomPanel extends JPanel{
 	private JTextField infoText;
 	private JTextField statusText;
 	
+	/**
+	 * Domyślny konstruktor
+	 */
 	public BottomPanel() {
 		textPanel = new TextPanel();
 		textPanel.setPreferredSize(new Dimension(668,150));
@@ -48,11 +55,19 @@ public class BottomPanel extends JPanel{
 		
 	}
 	
+	/**
+	 * Metoda umieszczająca tekst w panelu tekstowym aplikacji
+	 * @param message - wiadomość do wysłania
+	 */
 	public void sendMessage(String message)
 	{
 		this.textPanel.appendText(message);
 	}
 	
+	/**
+	 * Metoda umieszczająca nazwę aktualnie wykonywanej operacji w polu infoText
+	 * @param c - enum opisujący operację do wykonania
+	 */
 	public void setInfo(Command c) {
 		//SUM,AVG,MIN,MAX,ADD_VALUE,CLEAR,FILL_RANDOM,SAVE_TO_FILE,OPEN_FORM_FILE
 		String result ="";
@@ -101,6 +116,11 @@ public class BottomPanel extends JPanel{
 	
 	
 	
+	/**
+	 * Metoda ustawiająca status operacji
+	 * @param status - true dla poprawnie wykonanego polecenia, w przeciwnym
+	 * przypadku false
+	 */
 	public void setStatus(boolean status) {
 		if(status) {
 			statusText.setText("OK");
@@ -115,6 +135,9 @@ public class BottomPanel extends JPanel{
 	
 	
 	
+	/**
+	 * Metoda generująca Layout komponentu
+	 */
 	private void setUpLayout() {
 		setLayout(new GridBagLayout());
 

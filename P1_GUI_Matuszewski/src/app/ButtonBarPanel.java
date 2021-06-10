@@ -15,13 +15,23 @@ import javax.swing.*;
 
 import com.l2fprod.common.demo.ButtonBarMain;
 
+/**
+ * Gorny panel z przyciskami
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class ButtonBarPanel extends JPanel {
+
 
 	DataTable dataTable;
 	Chart chart;
 	
 	private Component currentComponent;
 
+	/**
+	 * Konstruktor
+	 * @param toolbar - obiekt klasy JButtonBar
+	 */
 	public ButtonBarPanel(JButtonBar toolbar) {
 		setLayout(new BorderLayout());
 
@@ -41,19 +51,12 @@ public class ButtonBarPanel extends JPanel {
 
 	}
 
-	private JPanel makePanel(String title) {
-		JPanel panel = new JPanel(new BorderLayout());
-		JLabel top = new JLabel(title);
-		top.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		top.setFont(top.getFont().deriveFont(Font.BOLD));
-		top.setOpaque(true);
-		top.setBackground(panel.getBackground().brighter());
-		panel.add("North", top);
-		panel.setPreferredSize(new Dimension(40, 40));
-		panel.setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
-		return panel;
-	}
 
+	
+	/**
+	 * Metoda pomocnicza wykorzystywana w funkcji addButton
+	 * @param component - obiekt klasy Component
+	 */
 	private void show(Component component) {
 		if (currentComponent != null) {
 			remove(currentComponent);
@@ -63,6 +66,14 @@ public class ButtonBarPanel extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Metoda dodajaca przycisk do panelu
+	 * @param title - tytul przycisku
+	 * @param iconUrl - adres ikony
+	 * @param component - komponent docelowy
+	 * @param bar - JbuttonBar
+	 * @param group - ButtonGroup
+	 */
 	private void addButton(String title, String iconUrl, final Component component, JButtonBar bar, ButtonGroup group) {
 		String iconSource = getSrc(iconUrl);
 		Action action = new AbstractAction(title, new ImageIcon(iconSource)) {
@@ -83,6 +94,11 @@ public class ButtonBarPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Metoda pomocnicza, generuje adres globalny pliku ikony
+	 * @param file -  nazwa ikony
+	 * @return String - bezwzględny adres ikony
+	 */
 	private String getSrc(String file)
 	{
 		String path = System.getProperty("user.dir");

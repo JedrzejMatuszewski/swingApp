@@ -9,36 +9,78 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.file.*;
-import java.text.DateFormat;
-import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
-import java.time.Year;
 import java.util.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
-import com.l2fprod.common.swing.JTipOfTheDay;
-import com.l2fprod.common.swing.tips.DefaultTip;
-import com.l2fprod.common.swing.tips.DefaultTipModel;
 
+
+/**
+ * Glowne okno aplikacji
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class MainFrame extends JFrame {
 
+	/**
+	 * Pasek narzedziowy
+	 */
 	private ToolBar toolBar;
+	/**
+	 * Prawy panel aplikacji
+	 */
 	private RightPanel rightPanel;
+	/**
+	 * Lewy panel aplikacji
+	 */
 	private LeftPanel leftPanel;
+	/**
+	 * Dolny panel aplikacji
+	 */
 	private BottomPanel bottomPanel;
 
+	/**
+	 * Obiekt sluzacy do odczytu/zapisu pliku
+	 */
 	private JFileChooser fileChooser;
 
+	/**
+	 * Okno pomocy
+	 */
 	private HelpWindow helpWindow;
+	/**
+	 * Okno o autorze
+	 */
 	private AboutWindow aboutWindow;
 	
+	/**
+	 * Panel typu JOptionPane
+	 */
 	private JOptionPane optionPane;
 	
+	/**
+	 * Okno z porada dnia
+	 */
 	private Tips tips;
+	
+	/**
+	 * Logger zapisujacy do konsoli
+	 */
+	private static final Logger consoleLogger = LogManager.getLogger("ConsoleLogger");
+	/**
+	 * Logger zapisujacy do pliku
+	 */
+	private static final Logger fileLogger = LogManager.getLogger("FileLogger");
+	
 
+	/**
+	 * Konstruktor
+	 */
 	public MainFrame() {
 		// General settings
 		super("P1_GUI Matuszewski");
@@ -54,6 +96,7 @@ public class MainFrame extends JFrame {
 				makeOperation(Command.CLOSE_APP);
 			}
 		});
+		
 
 		toolBar = new ToolBar();
 		rightPanel = new RightPanel();
@@ -74,6 +117,9 @@ public class MainFrame extends JFrame {
 		
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Pliki tekstowe .TXT", "txt", "text");
 		fileChooser.setFileFilter(filter);
+		
+		fileLogger.info("Start aplikacji");
+		consoleLogger.info("Start aplikacji");
 
 		add(toolBar, BorderLayout.NORTH);
 		add(rightPanel, BorderLayout.EAST);
@@ -102,6 +148,10 @@ public class MainFrame extends JFrame {
 		setJMenuBar(CreateMenuBar());
 	}
 
+	/**
+	 * Metoda tworzaca menu aplikacji
+	 * @return JMenuBar - menu
+	 */
 	private JMenuBar CreateMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 
@@ -255,6 +305,10 @@ public class MainFrame extends JFrame {
 		return menuBar;
 	}
 
+	/**
+	 * Metoda wybierajaca operacje do wykonania
+	 * @param c - emum, typ operacji
+	 */
 	public void makeOperation(Command c) {
 		bottomPanel.setInfo(c);
 		try {
@@ -264,12 +318,19 @@ public class MainFrame extends JFrame {
 		} catch (Exception ex) {
 			bottomPanel.setStatus(false);
 			bottomPanel.sendMessage("Wystąpił błąd! ");
-			bottomPanel.sendMessage(ex.getMessage());
+			bottomPanel.sendMessage(ex.getMessage() + "\n");
+			
+			consoleLogger.error(ex.getMessage());
+			fileLogger.error(ex.getMessage());
 			
 			JOptionPane.showMessageDialog(this, ex.getMessage(), "Wystąpił błąd", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
+	/**
+	 * Metoda wykonujaca wskazana operacje
+	 * @param c - enum, operacja do wykonanaia
+	 */
 	public void operationPerformer(Command c) throws Exception {
 		float num;
 		String message = "";
@@ -320,9 +381,14 @@ public class MainFrame extends JFrame {
 			closeApplication();
 		}
 
+		consoleLogger.info(message);
+		fileLogger.info(message);
 		this.bottomPanel.sendMessage(message + "\n");
 	}
 
+	/**
+	 * Metoda zamykajaca aplikacje
+	 */
 	public void closeApplication() {
 		int action = JOptionPane.showConfirmDialog(MainFrame.this, "Czy na pewno chcesz zamknąć aplikację?",
 				"Potwierdź zamknięcie", JOptionPane.OK_CANCEL_OPTION);
@@ -331,6 +397,9 @@ public class MainFrame extends JFrame {
 		}
 	}
 
+	/**
+	 * Metoda zapisujaca dane do pliku
+	 */
 	public void saveDataToFile() throws Exception {
 		String dataToSave = "";
 
@@ -355,6 +424,9 @@ public class MainFrame extends JFrame {
 		}
 	}
 
+	/**
+	 * Metoda pobierajaca dane z pliku
+	 */
 	public void importDataFromFile() throws Exception {
 
 		if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
@@ -391,12 +463,18 @@ public class MainFrame extends JFrame {
 
 	}
 	
+	/**
+	 * Metoda aktualizujaca stan wykresu
+	 */
 	private void updateChart() throws Exception
 	{
 		float[] data = this.leftPanel.buttonBarPanel.dataTable.tableModel.getFloatArray();
 		this.leftPanel.buttonBarPanel.chart.setData(data);
 	}
 
+	/**
+	 * Metoda rozmieszczajaca okno na ekranie
+	 */
 	private void arrangeWindow() {
 		// pobranie rozmiarow aplikacji
 		Dimension dialogSize = getSize();

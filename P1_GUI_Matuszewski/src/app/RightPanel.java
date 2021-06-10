@@ -21,21 +21,60 @@ import org.freixas.jcalendar.DateEvent;
 import org.freixas.jcalendar.DateListener;
 import org.freixas.jcalendar.JCalendarCombo;
 
+/**
+ * Prawy panel aplikacji
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class RightPanel extends JPanel {
 
+	/**
+	 * Przycisk dodajacy dane do tabeli
+	 */
 	JButton putNumberButton;
+	
+	/**
+	 * Przycisk czyszczacy tabele
+	 */
 	JButton clearTableButton;
+	/**
+	 * Przycisk umieszczajacy losowe dane w tabeli
+	 */
 	JButton putRandomNumbersButton;
+	/**
+	 * Przycisk zapisujacy dane do pliku
+	 */
 	JButton saveToFileButton;
+	/**
+	 * Interfejs przekazujacy rodzaj operacji do wykonania
+	 */
 	ICommandListener listener;
 	
+	/**
+	 * Opis operacji
+	 */
 	JLabel operationLabel;
+	/**
+	 * Lista mozliwywch operacji
+	 */
 	JList<OperationListItem> operationList;
+	/**
+	 * Przycisk obliczajacy
+	 */
 	JButton calculateButton;
 
+	/**
+	 * Opis kalendarza
+	 */
 	JLabel calendarLabel;
+	/**
+	 * Kalendarz
+	 */
 	JCalendarCombo calendarCombo;
 	
+	/**
+	 * Konstruktor
+	 */
 	public RightPanel() {
 		putNumberButton = new JButton("Dodaj");
 		clearTableButton = new JButton("Wyzeruj");
@@ -157,12 +196,19 @@ public class RightPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Metoda ustawiajaca interfejs ICommandListener
+	 * @param rightPanelListener - listener
+	 */
 	public void setListener(ICommandListener rightPanelListener)
 	{
 		this.listener = rightPanelListener;
 	}
 	
 
+	/**
+	 * Metoda generujaca wyglad komponentu
+	 */
 	private void createWiewOfComponent() {
 		setLayout(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(1,5,5,12));

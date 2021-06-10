@@ -9,12 +9,29 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+/**
+ * Okno zawierajace informacje o autorze
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class AboutWindow extends JDialog {
 
+	/**
+	 * Opis zdjecia
+	 */
 	private JLabel imgLabel;
+	/**
+	 * Tresc okna
+	 */
 	private JLabel textLabel;
+	/**
+	 * Przycisk zamykajacy okno 
+	 */
 	private JButton closeButton;
 
+	/**
+	 * Domyślny konstruktor
+	 */
 	public AboutWindow() {
 		setTitle("Info - P1_GUI_Matuszewski");
 		setSize(new Dimension(230, 340));
@@ -77,12 +94,20 @@ public class AboutWindow extends JDialog {
 
 	}
 	
+	/**
+	 * Metoda tworzaca ikone
+	 * @param file - adres do pliku w folderze icons
+	 * @return ImageIcon - ikona
+	 */
 	public ImageIcon createIcon(String file) {
 		String path = System.getProperty("user.dir");
 		path = path + "\\icons\\" + file;
 		return new ImageIcon(path);
 	}
 	
+	/**
+	 * Metoda rozmieszczajaca okno
+	 */
 	private void arrangeWindow() {
 		// pobranie rozmiarow aplikacji
 		Dimension dialogSize = getSize();

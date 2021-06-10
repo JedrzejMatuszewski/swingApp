@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+
+	<Loggers>
+		<Logger name="FileLogger" level="INFO" additivity="FALSE">
+			<AppenderRef ref="fileAppender" />
+
+		</Logger>
+
+		<Logger name="ConsoleLogger" level="INFO" additivity="FALSE">
+			<AppenderRef ref="consoleAppender" />
+
+		</Logger>
+
+		<Root level="INFO" additivity="FALSE">
+			<AppenderRef ref="consoleAppender" />
+		</Root>
+	</Loggers>
+
+	<Appenders>
+		<Console name="consoleAppender" target="SYSTEM_OUT">
+			<PatternLayout>
+				<Pattern>[%level] %d{yyyy-MM-dd HH:mm:ss} [%F] [%L]: %msg%n
+				</Pattern>
+			</PatternLayout>
+		</Console>
+
+		<RollingFile name="fileAppender"
+			fileName="log/application.log"
+			filePattern="log/application.%d{dd-MMM}.log.gz"
+			ignoreExceptions="false">
+			<PatternLayout>
+				<Pattern>[%level] %d{yyyy-MM-dd HH:mm:ss} [%F] [%L]: %msg%n
+				</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="10 MB" />
+				<TimeBasedTriggeringPolicy interval="168" modulate="true"/>
+			</Policies>
+			<DefaultRolloverStrategy max="5" />
+		</RollingFile>
+
+		<!--
+		<File name="fileAppender" fileName="log.log">
+			<PatternLayout>
+				<Pattern>[%level] %d{yyyy-MM-dd HH:mm:ss} [%F] [%L]: %msg%n
+				</Pattern>
+			</PatternLayout>
+		</File>
+		-->
+		
+
+
+	</Appenders>
+
+
+
+</Configuration>

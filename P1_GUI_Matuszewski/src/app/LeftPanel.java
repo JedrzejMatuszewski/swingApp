@@ -28,26 +28,70 @@ import com.l2fprod.common.swing.plaf.ButtonBarUI;
 import com.l2fprod.common.swing.plaf.blue.BlueishButtonBarUI;
 
 
+/**
+ * Lewy panel aplikacji
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class LeftPanel extends JPanel {
 
+	/**
+	 * Opis pola numeryczego (wartosc wprowadzana)
+	 */
 	JLabel inNumLabel;
+	/**
+	 * Opis pola numeryczego (numer wiersza)
+	 */
 	JLabel inRowLabel;
+	/**
+	 * Opis pola numeryczego (numer kolumny)
+	 */
 	JLabel inColLabel;
+	/**
+	 * Wartosc wprowadzana
+	 */
 	JTextField inNumber;
+	/**
+	 * Numer wiersza
+	 */
 	JSpinner rowNum;
+	/**
+	 * Numer kolumny
+	 */
 	JSpinner colNum;
 	
+	/**
+	 * Przycisk prowadzajacy
+	 */
 	JButton putNumberButton;
 
+	/**
+	 * Obiekt klasy JTabbedPane
+	 */
 	JTabbedPane tabs;
+	/**
+	 * Toolbar
+	 */
 	JButtonBar toolbar;
 	
 	
+	/**
+	 * Panel z przyciskami
+	 */
 	ButtonBarPanel buttonBarPanel;
+	/**
+	 * Pole tekstowe
+	 */
 	TextPanel textPanel;
 	
-	private ICommandListener listener;	
+	/**
+	 * Interfejs sluzacy do przekazywania polecen
+	 */
+	private ICommandListener listener;
 
+	/**
+	 * Konstruktor
+	 */
 	public LeftPanel() {
 
 		inNumLabel = new JLabel("Podaj liczbę: ");
@@ -96,16 +140,28 @@ public class LeftPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Pobieranie numeru wiersza
+	 * @return int - nr. wiersza
+	 */
 	public int getRowNum()
 	{
 		return (int)rowNum.getValue();
 	}
 	
+	/**
+	 * Pobieranie numeru kolumny
+	 * @return int - nr. kolumny
+	 */
 	public int getColNum()
 	{
 		return (int)colNum.getValue();
 	}
 	
+	/**
+	 * Pobranie wprowadzonej liczby
+	 * @return float - wprowadzona liczba
+	 */
 	public float getTypedNum() throws Exception
 	{
 		try {
@@ -117,11 +173,18 @@ public class LeftPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Ustawianie IcommandListener
+	 * @param listener
+	 */
 	public void setListener(ICommandListener listener)
 	{
 		this.listener = listener;
 	}
 
+	/**
+	 * Generowanie wygladu komponentu
+	 */
 	private void SetUpLayout() {
 		setLayout(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));

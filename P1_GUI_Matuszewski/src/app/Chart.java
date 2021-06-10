@@ -23,9 +23,9 @@ import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
 
 /**
- * A simple demonstration application showing how to create a horizontal bar
- * chart.
- *
+ * Histogram poziomy
+ * @author Jedrzej Matuszewski
+ * @version 1.0
  */
 public class Chart extends JPanel {
 
@@ -60,10 +60,19 @@ public class Chart extends JPanel {
 
 	}
 
+	/**
+	 * Metoda tworzaca zbior danych do wykresu
+	 * @return CategoryDataset - zbior danych
+	 */
 	public CategoryDataset createDataset() {
 		return DatasetUtilities.createCategoryDataset("Series ", "", data);
 	}
 
+	/**
+	 * Metoda tworzaca histogram poziomy
+	 * @param dataset - zbior danych
+	 * @return JFreeChart - wykres
+	 */
 	public JFreeChart createChart(CategoryDataset dataset) {
 
 		chart = ChartFactory.createBarChart("", // chart title
@@ -89,6 +98,10 @@ public class Chart extends JPanel {
 
 	}
 
+	/**
+	 * Metoda ustawiająca nowe dane na wykresie
+	 * @param data2 - zbiór nowych danych
+	 */
 	public void setData(float[] data2) {
 		int len = data2.length;
 
@@ -101,6 +114,9 @@ public class Chart extends JPanel {
 
 	}
 
+	/**
+	 * Metoda ustawiająca dane na wykresie
+	 */
 	public void setValue() {
 		for (int i = 0; i < 25; i++) {
 			String id = String.valueOf(i + 1);
@@ -108,6 +124,10 @@ public class Chart extends JPanel {
 		}
 	}
 	
+	/**
+	 * Metoda zwracająca maksymalną wartość danych na wykresie
+	 * @return float - maksymalna wartość
+	 */
 	public float getMaxvalue()
 	{
 		float max = 0;
@@ -120,6 +140,9 @@ public class Chart extends JPanel {
 		return max + 0.5f;
 	}
 	
+	/**
+	 * Metoda ustawiająca rozpiętość danych na wykresie
+	 */
 	public void setRange()
 	{
 		rangeAxis.setRange(0.0, getMaxvalue());

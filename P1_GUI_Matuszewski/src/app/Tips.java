@@ -20,16 +20,42 @@ import com.l2fprod.common.swing.JTipOfTheDay;
 import com.l2fprod.common.swing.tips.DefaultTip;
 import com.l2fprod.common.swing.tips.DefaultTipModel;
 
+/**
+ * Okno z porada dnia
+ * @author Jedrzej Matuszewski
+ * @version 1.0
+ */
 public class Tips extends JDialog {
+	/**
+	 * Obiekt klasy JTipOfTheDay
+	 */
 	JTipOfTheDay tipOfTheDay;
+	/**
+	 * Model danych
+	 */
 	DefaultTipModel tips;
 
+	/**
+	 * Przycisk przejscia do nastepnej porady
+	 */
 	JButton nextBtn;
+	/**
+	 * Przycisk przejscia do poprzedniej porady
+	 */
 	JButton previousBtn;
+	/**
+	 * Przycisk zamykajacy okno
+	 */
 	JButton closeBtn;
 
+	/**
+	 * Stopka komponentu
+	 */
 	JPanel footer;
 
+	/**
+	 * Konstruktor
+	 */
 	public Tips() {
 		tips = new DefaultTipModel();
 		tips.add(new DefaultTip("Tip1", ""
@@ -124,6 +150,9 @@ public class Tips extends JDialog {
 		arrangeWindow();
 	}
 
+	/**
+	 * Metoda rozmieszczajaca okno
+	 */
 	private void arrangeWindow() {
 		Dimension dialogSize = getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
